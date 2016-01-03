@@ -290,7 +290,9 @@ sub inputsToArgs {
     my @res = ();
 
     foreach my $input (sort keys %{$inputInfo}) {
-        push @res, "-I", "$input=$inputInfo->{$input}->[0]->{storePath}"
+        # TODO (BvD): Terrible temporary hack to get the right NIX_PATH for our build:
+        #push @res, "-I", "$input=$inputInfo->{$input}->[0]->{storePath}"
+        push @res, "-I", "$inputInfo->{$input}->[0]->{storePath}"
             if scalar @{$inputInfo->{$input}} == 1
                && defined $inputInfo->{$input}->[0]->{storePath};
         foreach my $alt (@{$inputInfo->{$input}}) {
